@@ -1,14 +1,17 @@
 name: Release
 
+# DISABLED by IT Simply (2026-11-12): this workflow runs semantic-release and publishes the package
+# and a GitHub release, which this fork must not do. Manual-only, and every job is off.
+# The gate is .github/workflows/itsl-gate.yml.
 on:
-  push:
-    branches: [main]
+  workflow_dispatch: {}
 
 permissions:
   contents: read
 
 jobs:
   build:
+    if: false
     runs-on: ubuntu-latest
     # Read-scoped on purpose: this job runs `npm ci` and therefore executes
     # every installed dependency's lifecycle scripts. It must never hold a
@@ -49,6 +52,7 @@ jobs:
 
   release:
     name: Release
+    if: false
     needs: build
     runs-on: ubuntu-latest
     # Write-scoped only here, and only for the final release step below.
